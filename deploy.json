@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "co-react",
+      "script": "npm",
+      "args" : "run deploy"
+    }
+  ]
+}
