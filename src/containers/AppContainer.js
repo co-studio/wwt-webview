@@ -36,7 +36,7 @@ class AppContainer extends Component {
  */
 const styles = StyleSheet.create({
   type: {
-    fontFamily: theme.type.family.coVerlag,
+    fontFamily: theme.type.family.coHalisRounded,
     fontSize: theme.type.size.body,
     letterSpacing: '1px',
     color: theme.colors.text

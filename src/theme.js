@@ -1,60 +1,53 @@
 import { StyleSheet } from 'aphrodite'
 
-
 /**
  * Color Palette
  */
 const colors = {
-  primary: '#6BAB90',
-  accent: '#8A5E60',
+  primary: '#ff8552',
+  accent: '#664e4c',
   invalid: '#DB5461',
   white: '#fff',
   text: '#2C2C2A',
   gray: {
-    darkest: '#565755',
-    darker: '#6B6C69',
-    dark: '#80817F',
-    light: '#BFC0BF',
-    lighter: '#D5D5D4',
-    lightest: '#E9EAE9',
+    darkest: '#4c4c4d',
+    darker: '#747475',
+    dark: '#9c9c9c',
+    light: '#c3c3c3',
+    lighter: '#d7d7d7',
+    lightest: '#ebebeb',
   }
 }
 
 /**
  * Font Faces
  */
-const Verlag = 'coVerlag'
-import VerlagBlack from './assets/fonts/Verlag-Black.otf'
-import VerlagBold from './assets/fonts/Verlag-Bold.otf'
-import VerlagBook from './assets/fonts/Verlag-Book.otf'
-import VerlagLight from './assets/fonts/Verlag-Light.otf'
-import VerlagXLight from './assets/fonts/Verlag-XLight.otf'
+const HalisRounded = 'coHalisRounded'
+import HalisRoundedBold from './assets/fonts/HalisRounded-Bold.otf'
+import HalisRoundedMedium from './assets/fonts/HalisRounded-Medium.otf'
+import HalisRoundedRegular from './assets/fonts/HalisRounded-Regular.otf'
+import HalisRoundedLight from './assets/fonts/HalisRounded-Light.otf'
 const family = {
-  [Verlag]: [
+  [HalisRounded]: [
     {
-      fontFamily: Verlag,
+      fontFamily: HalisRounded,
       fontWeight: 900,
-      src: `url(${VerlagBlack}) format('opentype')`
+      src: `url(${HalisRoundedBold}) format('opentype')`
     },
     {
-      fontFamily: Verlag,
+      fontFamily: HalisRounded,
       fontWeight: 700,
-      src: `url(${VerlagBold}) format('opentype')`
+      src: `url(${HalisRoundedMedium}) format('opentype')`
     },
     {
-      fontFamily: Verlag,
+      fontFamily: HalisRounded,
       fontWeight: 500,
-      src: `url(${VerlagBook}) format('opentype')`
+      src: `url(${HalisRoundedRegular}) format('opentype')`
     },
     {
-      fontFamily: Verlag,
+      fontFamily: HalisRounded,
       fontWeight: 300,
-      src: `url(${VerlagLight}) format('opentype')`
-    },
-    {
-      fontFamily: Verlag,
-      fontWeight: 100,
-      src: `url(${VerlagXLight}) format('opentype')`
+      src: `url(${HalisRoundedLight}) format('opentype')`
     },
   ]
 }
