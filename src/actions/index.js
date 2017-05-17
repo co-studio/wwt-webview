@@ -2,7 +2,7 @@ import qs from 'query-string'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://counsel.localtunnel.me/kit/messenger/webview'
+const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1190686434388188'
 
 /**
