@@ -3,8 +3,8 @@ import qs from 'query-string'
 import * as types from './types'
 
 const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
-const LOGAN_MID = '1190686434388188'
-const closeImage = 'image_url=https://s3.amazonaws.com/opine.ai/logo.png'
+const LOGAN_MID = '1206228496160213'
+const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
 const closeMessage = 'display_text=Returning to the chat...'
 const CLOSE_WEBVIEW_URL = `https://www.messenger.com/closeWindow/?${closeImage}&${closeMessage}`
 
@@ -49,126 +49,42 @@ function extensionsInit() {
  */
 export function fetchUser() {
   return (dispatch) => {
+    dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
     if (mid) {
-      return dispatch({ type: types.INIT_USER, mid })
+      return dispatch({ type: types.INIT_USER_SUCCESS, mid })
     }
     else {
       return extensionsInit()
       .then(fetchUserId)
       .then((id) => {
         cacheUserId(id)
-        return dispatch({ type: types.INIT_USER, mid: id })
+        return dispatch({ type: types.INIT_USER_SUCCESS, mid: id })
       })
-      .catch((err) => dispatch({ type: types.INIT_USER, err }))
+      .catch((err) => dispatch({ type: types.INIT_USER_FAILURE, err }))
     }
   }
 }
 
-export function updateForm(formName, fields) {
+export function submitScheduleSession(days, hours) {
   return (dispatch) => {
-    dispatch({ type: types.UPDATE_FORM, formName, fields  })
-    return postForm(formName, fields).then(
-      (res) => dispatch({ type: types.UPDATE_FORM_SUCCESS }),
-      (err) => dispatch({ type: types.UPDATE_FORM_FAILURE, err }),
+    dispatch({ type: types.SCHEDULE_SESSION, days, hours  })
+    return postScheduleSession(days, hours).then(
+      (res) => { dispatch(closeWebview()); dispatch({ type: types.SCHEDULE_SESSION_SUCCESS }) },
+      (err) => dispatch({ type: types.SCHEDULE_SESSION_FAILURE, err }),
     )
   }
 }
 
-function postForm(formName, fields) {
-  return fetch(API_ENDPOINT, {
+function postScheduleSession(days, hours) {
+  return fetch(`${API_ENDPOINT}/schedule/session`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      type: 'form',
-      form: {
-        name: formName,
-        fields: fields,
-        status: 'incomplete'
-      },
-      outbound: getCachedUserId(),
-      timestamp: createTimestamp()
+      mid: getCachedUserId(),
+      hours,
+      days,
     }),
     mode: 'cors'
   })
-}
-
-export function fetchForm(formName) {
-  return (dispatch) => {
-    dispatch({ type: types.GET_FORM, formName })
-    return getForm(formName).then(
-      (res) => res.json().then(body => dispatch({ type: types.GET_FORM_SUCCESS, formName, body })),
-      (err) => dispatch({ type: types.GET_FORM_FAILURE, err }),
-    )
-  }
-}
-
-function getForm(formName) {
-  const params = qs.stringify({
-    name: formName,
-    mid: getCachedUserId()
-  })
-  return fetch(`${API_ENDPOINT}?${params}`, { mode: 'cors' })
-}
-
-export function updateAndCompleteForm(formName, fields) {
-  return (dispatch) => {
-    return dispatch(updateForm(formName, fields)).then(() => {
-      return dispatch(completeForm(formName, fields))
-    })
-  }
-}
-
-export function completeForm(formName, fields) {
-  return (dispatch) => {
-    dispatch({ type: types.COMPLETE_FORM, formName })
-    return postCompleteForm(formName).then(
-      (res) => { dispatch(closeWebview()); dispatch({ type: types.COMPLETE_FORM_SUCCESS }) },
-      (err) => dispatch({ type: types.COMPLETE_FORM_FAILURE, err }),
-    )
-  }
-}
-
-function postCompleteForm(formName) {
-  return fetch(API_ENDPOINT, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      type: 'form',
-      form: {
-        name: formName,
-        status: 'complete'
-      },
-      outbound: getCachedUserId(),
-      timestamp: createTimestamp()
-    }),
-    mode: 'cors'
-  })
-}
-
-export function sendPostbackEvent(payload) {
-  return (dispatch) => {
-    dispatch({ type: types.SEND_POSTBACK_EVENT, payload })
-    return postPostbackEvent(payload).then(
-      dispatch(closeWebview())
-    )
-  }
-}
-
-function postPostbackEvent(payload) {
-  return fetch(API_ENDPOINT, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      type: 'postback',
-      postback: payload,
-      outbound: getCachedUserId(),
-      timestamp: createTimestamp()
-    }),
-    mode: 'cors'
-  })
-}
-
-function createTimestamp() {
-  return Math.round(new Date().getTime() / 1000)
 }

@@ -5,22 +5,24 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import theme from '../theme'
-import * as actions from '../actions'
+import * as actionCreators from '../actions'
 
 class ScheduleContainer extends Component {
   static propTypes = {
   }
 
   handleSessionSubmit = (hours, days) => {
-    console.log(hours, days)
+    const { actions } = this.props
+    actions.submitScheduleSession(hours, days)
   }
 
   handleCancel = () => {
-
+    const { actions } = this.props
+    actions.closeWebview()
   }
 
   renderChildren = () => {
-    const { children, actions } = this.props
+    const { children } = this.props
     const childrenWithProps = Children.map(children,
       (child) => cloneElement(child, {
         handleSessionSubmit: this.handleSessionSubmit,
@@ -52,7 +54,7 @@ function mapStateToProps(state) {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch)
+  return { actions: bindActionCreators(actionCreators, dispatch) }
 }
 
-export default connect(mapStateToProps)(ScheduleContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleContainer)
