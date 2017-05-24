@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   type: {
     fontFamily: theme.type.family.coHalisRounded,
     fontSize: theme.type.size.body,
-    letterSpacing: '1px',
+    // letterSpacing: '1px',
     color: theme.colors.text
   },
   layout: {

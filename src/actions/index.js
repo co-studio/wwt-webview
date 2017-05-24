@@ -4,16 +4,18 @@ import * as types from './types'
 
 const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1190686434388188'
+const closeImage = 'image_url=https://s3.amazonaws.com/opine.ai/logo.png'
+const closeMessage = 'display_text=Returning to the chat...'
+const CLOSE_WEBVIEW_URL = `https://www.messenger.com/closeWindow/?${closeImage}&${closeMessage}`
 
 /**
  * Webview MessengerExtensions
  */
 export function closeWebview() {
-  return (dispatch) =>
-    window.MessengerExtensions.requestCloseBrowser(
-      () => dispatch({ type: types.CLOSE_WEBVIEW }),
-      (err) => dispatch({ type: types.CLOSE_WEBVIEW, err })
-    )
+  return (dispatch) => {
+    window.location = CLOSE_WEBVIEW_URL
+    dispatch({ type: types.CLOSE_WEBVIEW })
+  }
 }
 
 function fetchUserId() {
