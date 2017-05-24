@@ -22,9 +22,10 @@ class ScheduleContainer extends Component {
   }
 
   renderChildren = () => {
-    const { children } = this.props
+    const { children, user } = this.props
     const childrenWithProps = Children.map(children,
       (child) => cloneElement(child, {
+        user,
         handleSessionSubmit: this.handleSessionSubmit,
         handleCancel: this.handleCancel,
       })

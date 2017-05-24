@@ -8,6 +8,7 @@
   "dependencies": {
     "aphrodite": "^1.2.0",
     "co-ui": "^1.0.0",
+    "moment": "^2.18.1",
     "react": "^15.4.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^15.4.2",

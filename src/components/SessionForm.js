@@ -68,7 +68,7 @@ class SessionForm extends Component {
 
   render() {
     return (
-      <DocumentTitle title="Schedule Your Availability">
+      <DocumentTitle title="Your Current Session">
         <Column styles={styles.leftAlign}>
           How long would you like to remain available?
 

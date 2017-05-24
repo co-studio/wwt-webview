@@ -3,9 +3,17 @@ import * as types from '../actions/types'
 const initialState = {
   mid: null,
 
-  session: {
-    days: 0,
-    hours: 0
+  schedule: {
+    timePeriods: [
+      // example:
+      { day: 2, start: 11, end: 20 },
+      { day: 3, start: 8, end: 13 },
+      { day: 4, start: 12, end: 24 },
+    ],
+    session: {
+      days: 0,
+      hours: 0
+    },
   },
 
   err: null,
@@ -24,7 +32,7 @@ function user(state = initialState, action) {
       return { ...state }
 
     case types.SCHEDULE_SESSION_SUCCESS:
-      state.session = initialState.session
+      state.schedule.session = initialState.schedule.session
       state.loading = false
       return { ...state }
 
