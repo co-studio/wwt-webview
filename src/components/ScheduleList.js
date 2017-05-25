@@ -40,7 +40,9 @@ class ScheduleList extends Component {
           {timePeriods.length > 0 && timePeriods.map(this.renderItem)}
 
           <Row>
-            <Button type="primary"
+            <Button
+              styles={styles.fullWidth}
+              type="primary"
               color={theme.colors.primary}
               onClick={() => this.props.router.push('/schedule/timePeriod')}>
               Add Time
@@ -53,11 +55,13 @@ class ScheduleList extends Component {
               Current Session
             </Header>
 
-            <div>
-              {session.days}days, {session.hours}hrs remaining
+            <div className={css(styles.header)}>
+              {session.days} days, {session.hours} hrs remaining
             </div>
 
-            <Button type="secondary"
+            <Button
+              styles={styles.fullWidth}
+              type="secondary"
               color={theme.colors.primary}
               onClick={() => this.props.router.push('/schedule/session')}>
               Manage Session
@@ -75,9 +79,12 @@ const styles = StyleSheet.create({
   noWrap: {
     flexWrap: 'nowrap'
   },
+  fullWidth: {
+    width: '100%'
+  },
   header: {
     marginTop: '0',
-    marginBottom: theme.space.inner
+    marginBottom: theme.space.outer
   }
 })
 

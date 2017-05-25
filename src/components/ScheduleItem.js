@@ -44,7 +44,7 @@ const ScheduleItem = (props) => {
         </span>
         {startTime}–{endTime}
       </Column>
-      <Column>
+      <Column styles={styles.rightColumn}>
         <IconButton
           icon={iconX}
           iconStyles={styles.icon}
@@ -71,7 +71,11 @@ const styles = StyleSheet.create({
   },
   leftColumn: {
     flex: '1',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginLeft: '0',
+  },
+  rightColumn: {
+    marginRight: '0'
   },
   icon: {
     height: '14px'
