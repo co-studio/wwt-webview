@@ -2,9 +2,11 @@ import React from 'react'
 import pt from 'prop-types'
 import moment from 'moment'
 import { StyleSheet, css } from 'aphrodite'
-import { Column, Row } from 'co-ui'
+import { lighten } from 'polished'
+import { Column, Row, IconButton } from 'co-ui'
 
 import theme from '../theme'
+import iconX from '../assets/icons/icon-x.svg'
 
 const ScheduleItem = (props) => {
   const weekDays = [
@@ -33,6 +35,7 @@ const ScheduleItem = (props) => {
   }
   const startTime = formatTime(props.start)
   const endTime = formatTime(props.end)
+  console.log(IconButton)
   return (
     <Row styles={styles.container}>
       <Column styles={styles.leftColumn}>
@@ -42,7 +45,12 @@ const ScheduleItem = (props) => {
         {startTime}–{endTime}
       </Column>
       <Column>
-        icon
+        <IconButton
+          icon={iconX}
+          iconStyles={styles.icon}
+          color={lighten(0.1, theme.colors.primary)}
+          onClick={() => {}}
+        />
       </Column>
     </Row>
   )
@@ -56,7 +64,7 @@ ScheduleItem.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: theme.space.inner
+    marginBottom: theme.space.outer
   },
   label: {
     color: theme.colors.gray.dark
@@ -64,6 +72,9 @@ const styles = StyleSheet.create({
   leftColumn: {
     flex: '1',
     alignItems: 'flex-start'
+  },
+  icon: {
+    height: '14px'
   }
 })
 
