@@ -35,7 +35,6 @@ const ScheduleItem = (props) => {
   }
   const startTime = formatTime(props.start)
   const endTime = formatTime(props.end)
-  console.log(IconButton)
   return (
     <Row styles={styles.container}>
       <Column styles={styles.leftColumn}>
