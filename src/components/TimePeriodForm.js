@@ -3,12 +3,10 @@ import pt from 'prop-types'
 import { StyleSheet, css } from 'aphrodite'
 import { Column, Row, Button, MultiSelectButton } from 'co-ui'
 import DocumentTitle from 'react-document-title'
-import Slider from 'rc-slider'
+import ReactSlider from 'react-slider'
+import { Text } from 'co-ui'
 
 import theme from '../theme'
-
-const createSliderWithTooltip = Slider.createSliderWithTooltip
-const Range = createSliderWithTooltip(Slider.Range)
 
 class TimePeriodForm extends Component {
   static propTypes = {
@@ -22,7 +20,9 @@ class TimePeriodForm extends Component {
       W: false,
       Th: false,
       Sa: false,
-    }
+    },
+    startHour: 8,
+    endHour: 16
   }
 
   selectDay = (option) => {
@@ -33,45 +33,61 @@ class TimePeriodForm extends Component {
 
   formatHour(hour) {
     if (hour < 12) {
-      return `${hour}AM`
+      return `${hour}am`
     }
     else if (hour === 12) {
-      return `${hour}PM`
+      return `${hour}pm`
     }
     else if (hour === 24) {
-      return `${hour - 12}AM`
+      return `${hour - 12}am`
     }
     else {
-      return `${hour - 12}PM`
+      return `${hour - 12}pm`
     }
+  }
+
+  handleSliderChange = ([ startHour, endHour ]) => {
+    this.setState({ startHour, endHour })
   }
 
   render() {
     return (
       <DocumentTitle title={"Add To your Schedule"}>
         <Column>
-          <MultiSelectButton
-            type="secondary"
-            color={theme.colors.primary}
-            options={[
-              { label: 'Su', value: this.state.options.Su },
-              { label: 'M', value: this.state.options.M },
-              { label: 'Tu', value: this.state.options.Tu },
-              { label: 'W', value: this.state.options.W },
-              { label: 'Th', value: this.state.options.Th },
-              { label: 'F', value: this.state.options.F },
-              { label: 'Sa', value: this.state.options.Sa },
-            ]}
-            onClick={this.selectDay}
-          />
-
-          <Range
-            min={0}
-            max={24}
-            tipFormatter={this.formatHour}
-          />
+          <Row styles={styles.row}>
+            <MultiSelectButton
+              type="secondary"
+              color={theme.colors.primary}
+              options={[
+                { label: 'Su', value: this.state.options.Su },
+                { label: 'M', value: this.state.options.M },
+                { label: 'Tu', value: this.state.options.Tu },
+                { label: 'W', value: this.state.options.W },
+                { label: 'Th', value: this.state.options.Th },
+                { label: 'F', value: this.state.options.F },
+                { label: 'Sa', value: this.state.options.Sa },
+              ]}
+              onClick={this.selectDay}
+            />
+          </Row>
 
           <Row styles={styles.row}>
+            <Text styles={styles.sliderLabel}>
+              {this.formatHour(this.state.startHour)}–{this.formatHour(this.state.endHour)}
+            </Text>
+            <ReactSlider
+              min={1}
+              max={24}
+              defaultValue={[ this.state.startHour, this.state.endHour ]}
+              withBars={true}
+              onChange={this.handleSliderChange}
+              className={css(styles.sliderClass)}
+              handleClassName={css(styles.handleClass)}
+              barClassName={css(styles.barClass)}
+            />
+          </Row>
+
+          <Row styles={[ styles.row, styles.noWrap ]}>
             <Button
               type="secondary"
               color={theme.colors.primary}
@@ -96,15 +112,46 @@ class TimePeriodForm extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    flexWrap: 'nowrap',
     marginTop: theme.space.inner,
     marginBottom: theme.space.outer
+  },
+  noWrap: {
+    flexWrap: 'nowrap',
   },
   marginRight: {
     marginRight: theme.space.inner
   },
   buttonLg: {
     width: '100%'
+  },
+  sliderLabel: {
+    display: 'block',
+    width: '100%',
+    marginTop: '0',
+    fontWeight: theme.type.weight.medium
+  },
+  sliderClass: {
+    height: '17px',
+    width: '100%',
+    background: theme.colors.gray.lighter,
+    borderRadius: theme.border.radius,
+  },
+  handleClass: {
+    top: '-4px',
+    height: '26px',
+    width: '26px',
+    borderRadius: '20px',
+    boxShadow: theme.shadow,
+    background: theme.colors.gray.light,
+    touchAction: 'none' // avoid Chrome warning
+  },
+  barClass: {
+    ':nth-child(2)': {
+      height: '17px',
+      margin: '0 5px',
+      borderRadius: theme.border.radius,
+      background: theme.colors.primary
+    }
   }
 })
 
