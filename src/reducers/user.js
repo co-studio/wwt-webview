@@ -28,6 +28,7 @@ function user(state = initialState, action) {
       return { ...state }
 
     case types.SCHEDULE_SESSION:
+    case types.SCHEDULE_TIMEPERIOD:
       state.loading = true
       return { ...state }
 
@@ -36,7 +37,12 @@ function user(state = initialState, action) {
       state.loading = false
       return { ...state }
 
+    case types.SCHEDULE_TIMEPERIOD_SUCCESS:
+      state.loading = false
+      return  { ...state }
+
     case types.SCHEDULE_SESSION_FAILURE:
+    case types.SCHEDULE_TIMEPERIOD_FAILURE:
       state.err = action.err
       state.loading = false
       return { ...state }

@@ -2,7 +2,8 @@ import qs from 'query-string'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
+const API_ENDPOINT = 'https://f6e08b68.ngrok.io/webview'
+// const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
 const closeMessage = 'display_text=Returning to the chat...'
@@ -84,6 +85,29 @@ function postScheduleSession(days, hours) {
       mid: getCachedUserId(),
       hours,
       days,
+    }),
+    mode: 'cors'
+  })
+}
+
+export function submitScheduleTimePeriod(days, start, end) {
+  return (dispatch) => {
+    dispatch({ type: types.SCHEDULE_TIMEPERIOD, days, start, end  })
+    return postScheduleTimePeriod(days, start, end).then(
+      (res) => {// dispatch(closeWebview());
+        dispatch({ type: types.SCHEDULE_TIMEPERIOD_SUCCESS }) },
+      (err) => dispatch({ type: types.SCHEDULE_TIMEPERIOD_FAILURE, err }),
+    )
+  }
+}
+
+function postScheduleTimePeriod(days, start, end) {
+  return fetch(`${API_ENDPOINT}/schedule/timePeriod`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mid: getCachedUserId(),
+      days, start, end
     }),
     mode: 'cors'
   })

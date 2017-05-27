@@ -10,6 +10,8 @@ import theme from '../theme'
 
 class TimePeriodForm extends Component {
   static propTypes = {
+    handleTimePeriodSubmit: pt.func,
+    handleCancel: pt.func,
   }
 
   state = {
@@ -48,6 +50,23 @@ class TimePeriodForm extends Component {
 
   handleSliderChange = ([ startHour, endHour ]) => {
     this.setState({ startHour, endHour })
+  }
+
+  // convert { Su: false } -> [ false ]
+  formatDayToInt(options) {
+    const days = []
+    for (let [ day, value ] of Object.entries(options)) {
+      days.push(value)
+    }
+    return days
+  }
+
+  onSubmit = (options, start=false, end=false) => {
+    const days = this.formatDayToInt(options)
+    if (!days.some(day => day) || !start || !end ) {
+      this.props.handleCancel()
+    }
+    this.props.handleTimePeriodSubmit(days, start, end)
   }
 
   render() {
@@ -92,7 +111,7 @@ class TimePeriodForm extends Component {
               type="secondary"
               color={theme.colors.primary}
               styles={styles.marginRight}
-              onClick={ () => this.onSubmit() }>
+              onClick={ () => this.props.handleCancel() }>
               Cancel
             </Button>
 
@@ -100,7 +119,7 @@ class TimePeriodForm extends Component {
               type="primary"
               color={theme.colors.primary}
               styles={styles.buttonLg}
-              onClick={ () => this.onSubmit(this.state.hours, this.state.days) }>
+              onClick={ () => this.onSubmit(this.state.options, this.state.startHour, this.state.endHour) }>
               Save
             </Button>
           </Row>

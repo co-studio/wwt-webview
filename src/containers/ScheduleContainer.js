@@ -16,6 +16,11 @@ class ScheduleContainer extends Component {
     actions.submitScheduleSession(hours, days)
   }
 
+  handleTimePeriodSubmit = (days, start, end) => {
+    const { actions } = this.props
+    actions.submitScheduleTimePeriod(days, start, end)
+  }
+
   handleCancel = () => {
     const { actions } = this.props
     actions.closeWebview()
@@ -27,6 +32,7 @@ class ScheduleContainer extends Component {
       (child) => cloneElement(child, {
         user,
         handleSessionSubmit: this.handleSessionSubmit,
+        handleTimePeriodSubmit: this.handleTimePeriodSubmit,
         handleCancel: this.handleCancel,
       })
     )

@@ -105,7 +105,7 @@ class SessionForm extends Component {
               type="secondary"
               color={theme.colors.primary}
               styles={styles.marginRight}
-              onClick={ () => this.onSubmit() }>
+              onClick={ () => this.props.handleCancel() }>
               Cancel
             </Button>
 
@@ -113,7 +113,7 @@ class SessionForm extends Component {
               type="primary"
               color={theme.colors.primary}
               styles={styles.buttonLg}
-              onClick={ () => this.onSubmit(this.state.hours, this.state.days) }>
+              onClick={ () => this.onSubmit(this.state.days, this.state.hours,) }>
               Submit
             </Button>
           </Row>
