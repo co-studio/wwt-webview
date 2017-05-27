@@ -55,7 +55,7 @@ export function fetchUser() {
     if (mid) {
       return getUser(mid).then(res => res.json()).then(
         (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
-        (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
+        (err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })},
       )
     }
     else {
@@ -65,10 +65,10 @@ export function fetchUser() {
         cacheUserId(id)
         return getUser(mid).then(
           (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
-          (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
+          (err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })},
         )
       })
-      .catch((err) => dispatch({ type: types.INIT_USER_FAILURE, err }))
+      .catch((err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })})
     }
   }
 }
