@@ -53,7 +53,7 @@ export function fetchUser() {
     dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
     if (mid && mid != null) {
-      alert(`got cached mid: ${mid}, type: ${typeof mid}`)
+      alert(`got cached mid: ${mid}, type: ${typeof mid}, NODE_ENV: ${process.env.NODE_ENV}`)
       return getUser(mid).then(res => res.json()).then(
         (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
         (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
