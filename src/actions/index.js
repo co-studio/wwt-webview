@@ -36,7 +36,7 @@ function getCachedUserId() {
   if (process.env.NODE_ENV === 'development') {
     return LOGAN_MID
   }
-  return window.localStorage.mid
+  return window.localStorage.mid || null
 }
 
 function extensionsInit() {
