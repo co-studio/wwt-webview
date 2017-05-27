@@ -21,6 +21,11 @@ class ScheduleContainer extends Component {
     actions.submitScheduleTimePeriod(days, start, end)
   }
 
+  handleTimePeriodRemove = (day, start, end) => {
+    const { actions } = this.props
+    actions.removeTimePeriod(day, start, end)
+  }
+
   handleCancel = () => {
     const { actions } = this.props
     actions.closeWebview()
@@ -33,6 +38,7 @@ class ScheduleContainer extends Component {
         user,
         handleSessionSubmit: this.handleSessionSubmit,
         handleTimePeriodSubmit: this.handleTimePeriodSubmit,
+        handleTimePeriodRemove: this.handleTimePeriodRemove,
         handleCancel: this.handleCancel,
       })
     )

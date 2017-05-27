@@ -15,13 +15,14 @@ class ScheduleList extends Component {
   static defaultProps = {
   }
 
-  renderItem(timePeriod, index) {
+  renderItem = (timePeriod, index) => {
     return (
       <ScheduleItem
         key={index}
         day={timePeriod.day}
         start={timePeriod.start}
         end={timePeriod.end}
+        onClick={this.props.handleTimePeriodRemove}
       />
     )
   }

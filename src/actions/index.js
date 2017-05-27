@@ -1,8 +1,9 @@
 import qs from 'query-string'
+import { push } from 'react-router-redux'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://f6e08b68.ngrok.io/webview'
+const API_ENDPOINT = 'https://eceb9032.ngrok.io/webview'
 // const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
@@ -94,8 +95,7 @@ export function submitScheduleTimePeriod(days, start, end) {
   return (dispatch) => {
     dispatch({ type: types.SCHEDULE_TIMEPERIOD, days, start, end  })
     return postScheduleTimePeriod(days, start, end).then(
-      (res) => {// dispatch(closeWebview());
-        dispatch({ type: types.SCHEDULE_TIMEPERIOD_SUCCESS }) },
+      (res) => { dispatch({ type: types.SCHEDULE_TIMEPERIOD_SUCCESS }); dispatch(push('schedule')) },
       (err) => dispatch({ type: types.SCHEDULE_TIMEPERIOD_FAILURE, err }),
     )
   }
@@ -108,6 +108,28 @@ function postScheduleTimePeriod(days, start, end) {
     body: JSON.stringify({
       mid: getCachedUserId(),
       days, start, end
+    }),
+    mode: 'cors'
+  })
+}
+
+export function removeTimePeriod(day, start, end) {
+  return (dispatch) => {
+    dispatch({ type: types.REMOVE_TIMEPERIOD, day, start, end  })
+    return postRemoveTimePeriod(day, start, end).then(
+      (res) => dispatch({ type: types.REMOVE_TIMEPERIOD_SUCCESS, day, start, end }),
+      (err) => dispatch({ type: types.REMOVE_TIMEPERIOD_FAILURE, err }),
+    )
+  }
+}
+
+function postRemoveTimePeriod(day, start, end) {
+  return fetch(`${API_ENDPOINT}/schedule/timePeriod/remove`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mid: getCachedUserId(),
+      day, start, end
     }),
     mode: 'cors'
   })

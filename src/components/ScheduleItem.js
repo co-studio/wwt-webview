@@ -48,7 +48,7 @@ const ScheduleItem = (props) => {
           icon={iconX}
           iconStyles={styles.icon}
           color={lighten(0.1, theme.colors.primary)}
-          onClick={() => {}}
+          onClick={() => props.onClick(props.day, props.start, props.end)}
         />
       </Column>
     </Row>
@@ -59,6 +59,7 @@ ScheduleItem.propTypes = {
   day: pt.number.isRequired,
   start: pt.number.isRequired,
   end: pt.number.isRequired,
+  onClick: pt.func
 }
 
 const styles = StyleSheet.create({

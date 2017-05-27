@@ -29,6 +29,7 @@ function user(state = initialState, action) {
 
     case types.SCHEDULE_SESSION:
     case types.SCHEDULE_TIMEPERIOD:
+    case types.REMOVE_TIMEPERIOD:
       state.loading = true
       return { ...state }
 
@@ -41,8 +42,19 @@ function user(state = initialState, action) {
       state.loading = false
       return  { ...state }
 
+    case types.REMOVE_TIMEPERIOD_SUCCESS:
+      console.log(action)
+      state.schedule.timePeriods = state.schedule.timePeriods.filter(
+        time => (time.day !== action.day ||
+                 time.start !== action.start ||
+                 time.end !== action.end)
+      )
+      state.loading = false
+      return { ...state }
+
     case types.SCHEDULE_SESSION_FAILURE:
     case types.SCHEDULE_TIMEPERIOD_FAILURE:
+    case types.REMOVE_TIMEPERIOD_FAILURE:
       state.err = action.err
       state.loading = false
       return { ...state }
