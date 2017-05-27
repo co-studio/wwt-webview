@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "co-react",
+      "name": "wwt-webview",
       "script": "npm",
       "args" : "run deploy"
     }
