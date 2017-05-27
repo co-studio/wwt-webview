@@ -41,7 +41,7 @@ function getCachedUserId() {
 
 function extensionsInit() {
   return new Promise(function(resolve, reject) {
-    window.extAsyncInit = () => { resolve() }
+    window.extAsyncInit = () => { alert('extensions init'); resolve() }
   })
 }
 
@@ -53,22 +53,24 @@ export function fetchUser() {
     dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
     if (mid) {
+      alert('got cached mid: ', mid)
       return getUser(mid).then(res => res.json()).then(
         (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
-        (err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })},
+        (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
       )
     }
     else {
       return extensionsInit()
       .then(fetchUserId)
-      .then((id) => {
-        cacheUserId(id)
+      .then((mid) => {
+        alert('got mid via messenger extensions: ', mid)
+        cacheUserId(mid)
         return getUser(mid).then(
           (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
-          (err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })},
+          (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
         )
       })
-      .catch((err) => {alert(err); dispatch({ type: types.INIT_USER_FAILURE, err })})
+      .catch((err) => dispatch({ type: types.INIT_USER_FAILURE, err }))
     }
   }
 }
