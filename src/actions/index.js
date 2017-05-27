@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://a4ec3761.ngrok.io/webview'
+const API_ENDPOINT = 'https://5ee6dae2.ngrok.io/webview'
 // const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
@@ -107,7 +107,7 @@ export function submitScheduleTimePeriod(days, start, end) {
   return (dispatch) => {
     dispatch({ type: types.SCHEDULE_TIMEPERIOD, days, start, end  })
     return postScheduleTimePeriod(days, start, end).then(
-      (res) => { dispatch({ type: types.SCHEDULE_TIMEPERIOD_SUCCESS }); dispatch(push('schedule')) },
+      (res) => { dispatch({ type: types.SCHEDULE_TIMEPERIOD_SUCCESS, days, start, end }); dispatch(push('/schedule')) },
       (err) => dispatch({ type: types.SCHEDULE_TIMEPERIOD_FAILURE, err }),
     )
   }

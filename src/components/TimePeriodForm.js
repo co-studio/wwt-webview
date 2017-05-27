@@ -21,6 +21,7 @@ class TimePeriodForm extends Component {
       Tu: false,
       W: false,
       Th: false,
+      F: false,
       Sa: false,
     },
     startHour: 8,

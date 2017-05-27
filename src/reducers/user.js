@@ -39,6 +39,15 @@ function user(state = initialState, action) {
       return { ...state }
 
     case types.SCHEDULE_TIMEPERIOD_SUCCESS:
+      const { days, start, end } = action
+      const newTimePeriods = days.map(
+        (day, index) => {
+          if (day) {
+            return { day: index, start, end }
+          }
+        }
+      ).filter(day => day != undefined)
+      state.schedule.timePeriods.push(...newTimePeriods)
       state.loading = false
       return  { ...state }
 
