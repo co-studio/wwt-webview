@@ -38,13 +38,12 @@ function getCachedUserId() {
   if (process.env.NODE_ENV === 'development') {
     return LOGAN_MID
   }
-  cacheUserId('1241629562600392')
   return window.localStorage.mid
 }
 
 function extensionsInit() {
   return new Promise(function(resolve, reject) {
-    window.extAsyncInit = () => { alert('extensions init'); resolve() }
+    window.extAsyncInit = () => { resolve() }
   })
 }
 
@@ -56,7 +55,6 @@ export function fetchUser() {
     dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
     if (mid && mid != null) {
-      alert(`got cached mid: ${mid}, type: ${typeof mid}, NODE_ENV: ${process.env.NODE_ENV}`)
       return getUser(mid).then(res => res.json()).then(
         (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
         (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
@@ -66,7 +64,6 @@ export function fetchUser() {
       return extensionsInit()
       .then(fetchUserId)
       .then((mid) => {
-        alert('got mid via messenger extensions: ', mid)
         cacheUserId(mid)
         return getUser(mid).then(
           (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),

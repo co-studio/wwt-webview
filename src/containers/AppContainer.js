@@ -25,8 +25,6 @@ class AppContainer extends Component {
     const body = (user.mid || inDevelopment) ? children : <Error />
     return (
       <main className={css([ styles.type, styles.layout ])}>
-        <h1>error: {user.err}</h1>
-        <h1>mid: {JSON.stringify(user, null, 4)}</h1>
         {body}
       </main>
     )
