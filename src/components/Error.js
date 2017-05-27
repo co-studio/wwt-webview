@@ -29,8 +29,8 @@ class Error extends Component {
         </Header>
         <div
           className="fb-messengermessageus"
-          data-messenger_app_id="767716400065985"
-          data-page_id="116538545584722"
+          data-messenger_app_id="1750463461934766"
+          data-page_id="1763620363890366"
           data-color="blue"
           data-size="xlarge"
         />

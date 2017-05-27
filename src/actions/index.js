@@ -3,8 +3,7 @@ import { push } from 'react-router-redux'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://5ee6dae2.ngrok.io/webview'
-// const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
+const API_ENDPOINT = 'https://wwt.impressiv.io/webview'
 const LOGAN_MID = '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
 const closeMessage = 'display_text=Returning to the chat...'
