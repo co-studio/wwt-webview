@@ -52,8 +52,8 @@ export function fetchUser() {
   return (dispatch) => {
     dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
-    if (mid) {
-      alert('got cached mid: ', mid)
+    if (mid && mid != null) {
+      alert(`got cached mid: ${mid}, type: ${typeof mid}`)
       return getUser(mid).then(res => res.json()).then(
         (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
         (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
