@@ -4,7 +4,9 @@ import { push } from 'react-router-redux'
 import * as types from './types'
 
 const API_ENDPOINT = 'https://wwt.impressiv.io/webview'
-const LOGAN_MID = '1206228496160213'
+const LOGAN_MID = (process.env.NODE_ENV === 'production')
+  ? '1241629562600392'
+  : '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
 const closeMessage = 'display_text=Returning to the chat...'
 const CLOSE_WEBVIEW_URL = `https://www.messenger.com/closeWindow/?${closeImage}&${closeMessage}`
@@ -36,7 +38,8 @@ function getCachedUserId() {
   if (process.env.NODE_ENV === 'development') {
     return LOGAN_MID
   }
-  return window.localStorage.mid || null
+  cacheUserId('1241629562600392')
+  return window.localStorage.mid
 }
 
 function extensionsInit() {
