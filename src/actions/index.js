@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 
 import * as types from './types'
 
-const API_ENDPOINT = 'https://eceb9032.ngrok.io/webview'
+const API_ENDPOINT = 'https://a4ec3761.ngrok.io/webview'
 // const API_ENDPOINT = 'https://wwtbot.localtunnel.me/webview'
 const LOGAN_MID = '1206228496160213'
 const closeImage = 'image_url=https://s3.amazonaws.com/we-walk-together/logo.png'
@@ -54,18 +54,30 @@ export function fetchUser() {
     dispatch({ type: types.INIT_USER })
     const mid = getCachedUserId()
     if (mid) {
-      return dispatch({ type: types.INIT_USER_SUCCESS, mid })
+      return getUser(mid).then(res => res.json()).then(
+        (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
+        (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
+      )
     }
     else {
       return extensionsInit()
       .then(fetchUserId)
       .then((id) => {
         cacheUserId(id)
-        return dispatch({ type: types.INIT_USER_SUCCESS, mid: id })
+        return getUser(mid).then(
+          (res) => dispatch({ type: types.INIT_USER_SUCCESS, mid, res }),
+          (err) => dispatch({ type: types.INIT_USER_FAILURE, err }),
+        )
       })
       .catch((err) => dispatch({ type: types.INIT_USER_FAILURE, err }))
     }
   }
+}
+
+function getUser(mid) {
+  return fetch(`${API_ENDPOINT}/user/${mid}`, {
+    // mode: 'cors'
+  })
 }
 
 export function submitScheduleSession(days, hours) {
