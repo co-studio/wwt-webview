@@ -26,6 +26,7 @@ class AppContainer extends Component {
     return (
       <main className={css([ styles.type, styles.layout ])}>
         <h1>error: {user.err}</h1>
+        <h1>mid: {user}</h1>
         {body}
       </main>
     )
